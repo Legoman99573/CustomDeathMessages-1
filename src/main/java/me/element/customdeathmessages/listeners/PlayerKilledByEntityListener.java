@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -82,15 +81,15 @@ public class PlayerKilledByEntityListener implements Listener {
 						path = "fireball-messages";
 					} else if (entity == EntityType.ARROW) // added before supported v
 					{ 
-						//if (((Projectile) event.getDamager()).getShooter() instanceof Skeleton) {
-						//	path = "skeleton-messages";
-						//} else if (versionInt >= VersionEnums.VERSION_110.getVersionInt() && ((Projectile) event.getDamager()).getShooter() instanceof Stray) {
-						//	path = "stray-messages";
-						//} else if (versionInt >= VersionEnums.VERSION_114.getVersionInt() && ((Projectile) event.getDamager()).getShooter() instanceof Pillager) {
-						//	path = "pillager-messages";
-						//} else {
+						if (((Projectile) event.getDamager()).getShooter() instanceof Skeleton) {
+							path = "skeleton-messages";
+						} else if (versionInt >= VersionEnums.VERSION_110.getVersionInt() && ((Projectile) event.getDamager()).getShooter() instanceof Stray) {
+							path = "stray-messages";
+						} else if (versionInt >= VersionEnums.VERSION_114.getVersionInt() && ((Projectile) event.getDamager()).getShooter() instanceof Pillager) {
+							path = "pillager-messages";
+						} else {
 							path = "arrow-messages";
-						//}
+						}
 					} else if (entity == EntityType.LIGHTNING) { // 1.11
 						path = "lightning-messages";
 					} else if (versionInt <= VersionEnums.VERSION_115.getVersionInt() && entity.toString().equals("PIG_ZOMBIE")) { // 1.15 and below (must use entity name due to unknown field)
@@ -149,6 +148,8 @@ public class PlayerKilledByEntityListener implements Listener {
 						path = "hoglin-messages";
 					} else if (versionInt >= VersionEnums.VERSION_116.getVersionInt() && entity == EntityType.ZOMBIFIED_PIGLIN) { // 1.16
 						path = "zombified-piglin-messages";
+					} else if (versionInt >= VersionEnums.VERSION_117.getVersionInt() && entity == EntityType.GOAT) { // 1.17
+						path = "goat-messages";
 					}
 
 					if (hasCustomName && plugin.getConfig().getBoolean("enable-custom-name-entity-messages"))

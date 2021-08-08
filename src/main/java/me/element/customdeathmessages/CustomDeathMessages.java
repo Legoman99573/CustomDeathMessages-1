@@ -1,16 +1,14 @@
 package me.element.customdeathmessages;
 
-import java.util.HashMap;
-
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import me.element.customdeathmessages.commands.CustomDeathMessagesCommand;
 import me.element.customdeathmessages.enums.VersionEnums;
 import me.element.customdeathmessages.listeners.PlayerDeathListener;
 import me.element.customdeathmessages.listeners.PlayerKilledByEntityListener;
 import me.element.customdeathmessages.listeners.PlayerLoginListener;
-import me.element.customdeathmessages.metrics.Metrics;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashMap;
 
 public class CustomDeathMessages extends JavaPlugin {
 
@@ -21,7 +19,6 @@ public class CustomDeathMessages extends JavaPlugin {
 	{
 		saveDefaultConfig();
 		checkVersion();
-		registerStatistics();
 		registerCommandsListeners();
 		
 		String version = getServer().getClass().getPackage().getName().substring(getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
@@ -72,22 +69,6 @@ public class CustomDeathMessages extends JavaPlugin {
 		}
 
 		else return VersionEnums.OTHER_VERSION;
-	}
-
-	public void registerStatistics()
-	{
-		int pluginId = 7287;
-		Metrics metrics = new Metrics(this, pluginId);
-
-		metrics.addCustomChart(new Metrics.SimplePie("head_drop_percentage", () -> String.valueOf(getConfig().getDouble("drop-head-percentage"))));
-		metrics.addCustomChart(new Metrics.SimplePie("give_killer_speed", () -> getConfig().getBoolean("give-killer-speed") ? "Enabled" : "Disabled" ));
-		metrics.addCustomChart(new Metrics.SimplePie("heart_sucker", () -> getConfig().getBoolean("heart-sucker") ? "Enabled" : "Disabled" ));
-		metrics.addCustomChart(new Metrics.SimplePie("do_lightning", () -> getConfig().getBoolean("do-lightning") ? "Enabled" : "Disabled" ));
-		metrics.addCustomChart(new Metrics.SimplePie("enable_global_messages", () -> getConfig().getBoolean("enable-global-messages") ? "Enabled" : "Disabled" ));
-		metrics.addCustomChart(new Metrics.SimplePie("enable_pvp_messages", () -> getConfig().getBoolean("enable-pvp-messages") ? "Enabled" : "Disabled" ));
-		metrics.addCustomChart(new Metrics.SimplePie("enable_entity_name_messages", () -> getConfig().getBoolean("enable-custom-name-entity-messages") ? "Enabled" : "Disabled" ));
-		metrics.addCustomChart(new Metrics.SimplePie("enable_original_hover_message",() -> getConfig().getBoolean("original-hover-message") ? "Enabled" : "Disabled" ));
-		metrics.addCustomChart(new Metrics.SimplePie("enable_item_tooltip_message",() -> getConfig().getBoolean("enable-item-hover") ? "Enabled" : "Disabled" ));
 	}
 
 	public void registerCommandsListeners()
