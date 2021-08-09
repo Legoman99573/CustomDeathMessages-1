@@ -35,7 +35,7 @@ public class PlayerKilledByEntityListener implements Listener {
 					int versionInt = plugin.getServerVersion().getVersionInt();
 
 					EntityType entity = event.getDamager().getType();
-					String path;
+					String path = "not-implemented-messages"; // Most likely the mob isn't implemented so we will set this instead.
 
 					boolean hasCustomName = event.getDamager().getCustomName() != null;
 
@@ -152,8 +152,6 @@ public class PlayerKilledByEntityListener implements Listener {
 						path = "goat-messages";
 					} else if (hasCustomName && plugin.getConfig().getBoolean("enable-custom-name-entity-messages")) {
 						path = "custom-name-entity-messages"; // Triggers for custom entities. Would recommend setting to true so that the not implemented setting wont be triggered.
-					} else {
-						path = "not-implemented-messages"; // Most likely the mob isn't implemented so we will set this instead.
 					}
 
 					Random rand = new Random();

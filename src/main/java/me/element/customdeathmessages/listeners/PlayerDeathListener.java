@@ -1,6 +1,7 @@
 package me.element.customdeathmessages.listeners;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import org.apache.commons.lang.WordUtils;
@@ -26,13 +27,13 @@ public class PlayerDeathListener implements Listener {
 
 	public CustomDeathMessages plugin;
 
-	public PlayerDeathListener (CustomDeathMessages plugin) 
+	public PlayerDeathListener (CustomDeathMessages plugin)
 	{
 		this.plugin = plugin;
 	}
 
 	@EventHandler
-	public void onPlayerDeath (PlayerDeathEvent event) 
+	public void onPlayerDeath (PlayerDeathEvent event)
 	{
 		Player victim = event.getEntity();
 		Player killer = event.getEntity().getKiller();
@@ -84,12 +85,12 @@ public class PlayerDeathListener implements Listener {
 			}
 		}
 
-		if (plugin.getConfig().getBoolean("do-lightning")) 
+		if (plugin.getConfig().getBoolean("do-lightning"))
 		{
 			playerLocation.getWorld().strikeLightningEffect(playerLocation);
 		}
 
-		if (plugin.getConfig().getBoolean("enable-global-messages")) 
+		if (plugin.getConfig().getBoolean("enable-global-messages"))
 		{
 			if (killer instanceof Player)
 			{
@@ -155,8 +156,8 @@ public class PlayerDeathListener implements Listener {
 				DamageCause cause = DamageCause.CUSTOM;
 				if (victim.getLastDamageCause() != null)
 					cause = victim.getLastDamageCause().getCause();
-				
-				String path;
+
+				String path = null;
 
 				if (cause == DamageCause.CUSTOM) {
 					path = "unknown-messages";
@@ -165,7 +166,7 @@ public class PlayerDeathListener implements Listener {
 				} else if (cause == DamageCause.DROWNING) { // added before supported v
 					path = "drowning-messages";
 				} else if (cause == DamageCause.LAVA) { // added before supported v
-					path = "lava-messages";   		
+					path = "lava-messages";
 				} else if (cause == DamageCause.SUFFOCATION) { // added before supported v
 					path = "suffocation-messages";
 				} else if (cause == DamageCause.WITHER) { // added before supported v
@@ -190,26 +191,43 @@ public class PlayerDeathListener implements Listener {
 					path = "magma-block-messages";
 				} else if (cause == DamageCause.SUICIDE) { // added before supported v
 					path = "suicide-messages";
-				} else {
-					path = "not-implemented-damagecause-message";
 				}
 
-				String msg;
+				String msg = "";
 
-				Random rand = new Random();
-				List<String> msgs = plugin.getConfig().getStringList(path);
-				msg = msgs.get(rand.nextInt(msgs.size()))
-						.replace("%victim%", victim.getName())
-						.replace("%victim-nick%", victim.getDisplayName())
-						.replace("%victim-x%", String.valueOf(victim.getLocation().getBlockX()))
-						.replace("%victim-y%", String.valueOf(victim.getLocation().getBlockY()))
-						.replace("%victim-z%", String.valueOf(victim.getLocation().getBlockZ()));
-				msg = HexChat.translateHexCodes(msg, plugin);
-
-				if (path.equals("not-implemented-damagecause-message")) {
-					msg = msg.replace("%damagecause-name%", victim.getLastDamageCause().getCause().toString());
+				if (path == null)
+				{
+					if (plugin.deathMessage.get(victim.getName()) != null)
+					{
+						msg = HexChat.translateHexCodes(plugin.deathMessage.get(victim.getName()), plugin);
+						plugin.deathMessage.clear();
+					}
+					else
+					{
+						Random rand = new Random();
+						List<String> msgs = plugin.getConfig().getStringList("not-implemented-damagecause-message");
+						msg = msgs.get(rand.nextInt(msgs.size()))
+								.replace("%victim%", victim.getName())
+								.replace("%victim-nick%", victim.getDisplayName())
+								.replace("%victim-x%", String.valueOf(victim.getLocation().getBlockX()))
+								.replace("%victim-y%", String.valueOf(victim.getLocation().getBlockY()))
+								.replace("%victim-z%", String.valueOf(victim.getLocation().getBlockZ()))
+								.replace("%damagecause-name%", cause.toString().toLowerCase());
+						msg = HexChat.translateHexCodes(msg, plugin);
+					}
 				}
-
+				else
+				{
+					Random rand = new Random();
+					List<String> msgs = plugin.getConfig().getStringList(path);
+					msg = msgs.get(rand.nextInt(msgs.size()))
+							.replace("%victim%", victim.getName())
+							.replace("%victim-nick%", victim.getDisplayName())
+							.replace("%victim-x%", String.valueOf(victim.getLocation().getBlockX()))
+							.replace("%victim-y%", String.valueOf(victim.getLocation().getBlockY()))
+							.replace("%victim-z%", String.valueOf(victim.getLocation().getBlockZ()));
+					msg = HexChat.translateHexCodes(msg, plugin);
+				}
 				if (plugin.getConfig().getBoolean("original-hover-message"))
 				{
 					String previous = event.getDeathMessage();
