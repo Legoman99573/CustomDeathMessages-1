@@ -275,5 +275,8 @@ goat-messages:
 not-implemented-messages:
     - "&c%victim% &ewas killed by &f&l%entity-name%."
 
+not-implemented-damagecause-message:
+    - "&c%victim% &ewas killed by &f&l%damagecause-name%."
+
 # Only here to help me debug my plugin, not suggested you enable.
 developer-mode: false
