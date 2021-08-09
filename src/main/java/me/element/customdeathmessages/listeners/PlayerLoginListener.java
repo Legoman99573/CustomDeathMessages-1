@@ -32,7 +32,7 @@ public class PlayerLoginListener implements Listener {
 		
 		if (plugin.getConfig().getBoolean("enable-update-messages"))
 		{
-			new UpdateChecker(plugin, 69605).getVersion(version ->
+			new UpdateChecker(plugin, 95172).getVersion(version ->
 			{
 				if (!plugin.getDescription().getVersion().equalsIgnoreCase(version.replace("v", ""))) 
 				{
@@ -40,7 +40,7 @@ public class PlayerLoginListener implements Listener {
 					{
 						player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8-----------------------------------------------------"));
 						player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bCustomDeathMessages: &7New version &f" + version + " &7is available."));
-						player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&fhttps://www.spigotmc.org/resources/customdeathmessages-cdm.69605/"));
+						player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&fhttps://www.spigotmc.org/resources/custom-death-messages-revive.95172/"));
 						player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8-----------------------------------------------------"));
 					}
 				}
