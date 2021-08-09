@@ -11,7 +11,7 @@ public enum VersionEnums {
 	VERSION_114(6), // version 1.14
 	VERSION_115(7), // version 1.15
 	VERSION_116(8), // version 1.16
-	VERSION_117(9), // version 1.17 (only here to disallow plugin being enabled until I have support)
+	VERSION_117(9), // version 1.17
 	
 	OTHER_VERSION(-1); // unknown version, plugin disallowed to run on server
 	

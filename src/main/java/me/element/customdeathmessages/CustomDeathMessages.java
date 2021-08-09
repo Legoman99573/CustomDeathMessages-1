@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class CustomDeathMessages extends JavaPlugin {
 
@@ -76,16 +77,16 @@ public class CustomDeathMessages extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new PlayerDeathListener (this), this);
 		getServer().getPluginManager().registerEvents(new PlayerKilledByEntityListener (this), this);
 		getServer().getPluginManager().registerEvents(new PlayerLoginListener (this), this);
-		getCommand("cdm").setExecutor(new CustomDeathMessagesCommand(this));
-		getCommand("cdm").setTabCompleter(new CustomDeathMessagesCommand(this));
+		Objects.requireNonNull(getCommand("cdm")).setExecutor(new CustomDeathMessagesCommand(this));
+		Objects.requireNonNull(getCommand("cdm")).setTabCompleter(new CustomDeathMessagesCommand(this));
 	}
 
 	public void checkVersion()
 	{
 		if (getServerVersion() == VersionEnums.OTHER_VERSION)
 		{	
-			getLogger().warning("[CustomDeathMessages] This server version is unsupported by CustomDeathMessages. Please update to version 1.8 or above on your server to use this plugin.");
-			getServer().getPluginManager().disablePlugin(this);
+			getLogger().warning("[CustomDeathMessages] This server version is unsupported by CustomDeathMessages. Though this should work with newer versions of minecraft, new mobs that can cause death will be missing until next update.");
+			// getServer().getPluginManager().disablePlugin(this);
 		}
 	}
 }

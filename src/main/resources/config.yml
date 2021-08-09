@@ -30,13 +30,13 @@ original-hover-message: false
 # Enable Item Hover: When hovering over the kill-weapons name, it will display the items enchantments, etc.
 enable-item-hover: false
 global-pvp-death-messages: 
-    - "&c%victim% &ehas been killed by &c%killer%"
+    - "&c%victim% &ehas been killed by &c%killer% &eusing &7[&b%kill-weapon%&7]"
     - "&c%victim% &ewas slain by &c%killer% &eusing &7[&b%kill-weapon%&7]"
-    - "&c%victim% &ehas been put down by &c%killer%"
+    - "&c%victim% &ehas been put down by &c%killer% &eusing &7[&b%kill-weapon%&7]"
     - "&c%victim% &ewas slaughtered by &c%killer% &eusing &7[&b%kill-weapon%&7]"
     - "&c%killer% &epulverized &c%victim% &eusing &7[&b%kill-weapon%&7]"
-    - "&c%victim% &ewas destroyed by &c%killer%&e"
-    - "&c%killer% &egave &c%victim% &ethe L"
+    - "&c%victim% &ewas destroyed by &c%killer% &eusing &7[&b%kill-weapon%&7]"
+    - "&c%killer% &egave &c%victim% &ethe L &ewith &7[&b%kill-weapon%&7]"
     - "&c%victim% &ewas EZ clapped by &c%killer% &eusing &7[&b%kill-weapon%&7]"
 
 # Placeholders for melee messages: %victim%, %victim-nick%, %killer%, %killer-nick%, %killer-x%, %killer-y%, %killer-z%, %victim-x%, %victim-y%, %victim-z%
@@ -260,13 +260,6 @@ zoglin-messages:
 zombified-piglin-messages:
     - "&c%victim% &etook a piglin to the overworld and was murdered by their new, not so friendly pet"
     - "&c%victim% &edied to a transformed piglin"
-
-# This is for any messages that haven't been added, so if you die to a cause which doesn't have any messages,
-#  one of these messages will display instead. (Please report any missing messages in my spigot discussion)
-unknown-messages:
-    - "&c%victim% &edied to unknown causes"
-    - "&c%victim% &edied"
-    - "&c%victim% &ewas killed"
     
 # The following messages only apply to projectiles shot by a mob, and not a player
 fireball-messages:
@@ -276,7 +269,11 @@ arrow-messages:
     - "&c%victim% &elooked like a porcupine after getting shot to death"
 
 goat-messages:
-    - "&c%victim% &egot rammed to death by an angry goat"
+    - "&c%victim% &egot rammed to death by an angry &f&lgoat"
+    - "&c%victim% &ewas knocked out by an angry &f&lgoat &eout of nowhere"
+
+not-implemented-messages:
+    - "&c%victim% &ewas killed by &f&l%entity-name%."
 
 # Only here to help me debug my plugin, not suggested you enable.
 developer-mode: false

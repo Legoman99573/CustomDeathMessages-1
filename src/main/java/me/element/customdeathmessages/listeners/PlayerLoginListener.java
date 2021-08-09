@@ -12,7 +12,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import me.element.customdeathmessages.CustomDeathMessages;
 import me.element.customdeathmessages.other.CustomConsumer;
@@ -30,18 +29,6 @@ public class PlayerLoginListener implements Listener {
 	public void onLogin(PlayerLoginEvent event) 
 	{
 		Player player = event.getPlayer();
-		
-		if (player.getName().equalsIgnoreCase("Elementeral"))
-		{
-			new BukkitRunnable() 
-			{
-				@Override
-				public void run()
-				{
-					player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bCustomDeathMessages: &7This server uses your plugin!"));
-				}
-			}.runTaskLaterAsynchronously(plugin, 10L);
-		}
 		
 		if (plugin.getConfig().getBoolean("enable-update-messages"))
 		{
