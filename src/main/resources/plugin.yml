@@ -1,8 +1,10 @@
 name: CustomDeathMessages
-version: 1.7.2
+version: 1.7.3
 main: me.element.customdeathmessages.CustomDeathMessages
 description: Custom Death Messages made by Element_85
-author: Element_85
+authors:
+  - Element_85
+  - Legoman99573
 
 commands:
   cdm:
