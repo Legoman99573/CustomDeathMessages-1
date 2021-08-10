@@ -38,4 +38,4 @@ IMPORTANT: Use of the command will delete all comments in the config, due to spi
 permission: cdm.updates
 allows players with this permission to receive a message when a plugin update is available.
 
-[![Maven Package](https://github.com/Legoman99573/CustomDeathMessages-1/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/Legoman99573/CustomDeathMessages-1/actions/workflows/maven-publish.yml)
+[![Java CI with Maven](https://github.com/Legoman99573/CustomDeathMessages-1/actions/workflows/maven.yml/badge.svg)](https://github.com/Legoman99573/CustomDeathMessages-1/actions/workflows/maven.yml)
