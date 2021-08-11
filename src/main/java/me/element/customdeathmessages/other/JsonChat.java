@@ -3,6 +3,7 @@ package me.element.customdeathmessages.other;
 import java.lang.reflect.Method;
 
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -22,18 +23,24 @@ public class JsonChat {
 
 		Object nmsNbtTagCompoundObj;
 		Object nmsItemStackObj;
-		Object itemAsJsonObject = null;
+		Object itemAsJsonObject;
 
-		try 
+		try
 		{
 			nmsNbtTagCompoundObj = nbtTagCompoundClazz.getConstructor().newInstance();
-			assert asNMSCopyMethod != null;
+			if (asNMSCopyMethod == null) {
+				return null;
+			}
 			nmsItemStackObj = asNMSCopyMethod.invoke(null, itemStack);
-			assert saveNmsItemStackMethod != null;
+			if (saveNmsItemStackMethod == null) {
+				return null;
+			}
 			itemAsJsonObject = saveNmsItemStackMethod.invoke(nmsItemStackObj, nmsNbtTagCompoundObj);
-		} 
+		}
 		catch (Throwable t)
 		{
+			Bukkit.getLogger().warning("[CustomDeathMessages] Failed to convert ItemStack to Json.");
+			return null;
 		}
 
 		return itemAsJsonObject.toString();

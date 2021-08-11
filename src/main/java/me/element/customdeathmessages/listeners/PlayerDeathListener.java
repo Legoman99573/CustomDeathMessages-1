@@ -147,6 +147,12 @@ public class PlayerDeathListener implements Listener {
 							.replace("%killer-z%", String.valueOf(killer.getLocation().getBlockZ()));
 
 					msg = HexChat.translateHexCodes(msg, plugin);
+					if (plugin.getConfig().getBoolean("enable-item-hover"))
+					{
+						event.setDeathMessage("");
+						Bukkit.spigot().broadcast(new JsonChat().getTextComponent(msg, killWeapon, "kill-weapon"));
+						return;
+					}
 					msg = msg.replace("%kill-weapon%", weaponName);
 					event.setDeathMessage(msg);
 				}
