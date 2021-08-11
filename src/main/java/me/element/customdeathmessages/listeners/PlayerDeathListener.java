@@ -147,6 +147,9 @@ public class PlayerDeathListener implements Listener {
 							.replace("%killer-z%", String.valueOf(killer.getLocation().getBlockZ()));
 
 					msg = HexChat.translateHexCodes(msg, plugin);
+					if (plugin.getConfig().getBoolean("developer-mode"))
+						Bukkit.broadcastMessage("msg test: " + msg);
+
 					if (plugin.getConfig().getBoolean("enable-item-hover"))
 					{
 						event.setDeathMessage("");
