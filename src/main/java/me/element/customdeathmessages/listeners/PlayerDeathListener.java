@@ -130,6 +130,7 @@ public class PlayerDeathListener implements Listener {
 				}
 				else
 				{
+					String weaponName = killWeapon.getItemMeta().hasDisplayName() ? killWeapon.getItemMeta().getDisplayName() : WordUtils.capitalize(killWeapon.getType().name().replaceAll("_", " ").toLowerCase());
 					Random rand = new Random();
 					List<String> msgs = plugin.getConfig().getStringList("melee-death-messages");
 
@@ -146,6 +147,7 @@ public class PlayerDeathListener implements Listener {
 							.replace("%killer-z%", String.valueOf(killer.getLocation().getBlockZ()));
 
 					msg = HexChat.translateHexCodes(msg, plugin);
+					msg = msg.replace("%kill-weapon%", weaponName);
 					event.setDeathMessage(msg);
 				}
 			}

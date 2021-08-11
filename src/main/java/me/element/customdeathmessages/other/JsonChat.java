@@ -27,10 +27,12 @@ public class JsonChat {
 		try 
 		{
 			nmsNbtTagCompoundObj = nbtTagCompoundClazz.getConstructor().newInstance();
+			assert asNMSCopyMethod != null;
 			nmsItemStackObj = asNMSCopyMethod.invoke(null, itemStack);
+			assert saveNmsItemStackMethod != null;
 			itemAsJsonObject = saveNmsItemStackMethod.invoke(nmsItemStackObj, nmsNbtTagCompoundObj);
 		} 
-		catch (Throwable t) 
+		catch (Throwable t)
 		{
 		}
 
