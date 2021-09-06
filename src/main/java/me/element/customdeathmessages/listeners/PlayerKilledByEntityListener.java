@@ -246,7 +246,7 @@ public class PlayerKilledByEntityListener implements Listener {
 					}
 
 					if (hasCustomName && plugin.getConfig().getBoolean("enable-custom-name-entity-messages")) {
-						if (Bukkit.getServer().getPluginManager().isPluginEnabled("mcMMO") && !event.getDamager().getName().contains("♥") || !Bukkit.getServer().getPluginManager().isPluginEnabled("mcMMO"))
+						if (Bukkit.getServer().getPluginManager().isPluginEnabled("mcMMO") && !event.getDamager().getName().contains("❤") || !Bukkit.getServer().getPluginManager().isPluginEnabled("mcMMO"))
 							path = "custom-name-entity-messages"; // Triggers for custom entities. Would recommend setting to true so that the not implemented setting wont be triggered.
 					}
 
