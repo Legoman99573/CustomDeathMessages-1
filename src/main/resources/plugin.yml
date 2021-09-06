@@ -2,6 +2,8 @@ name: CustomDeathMessages
 version: 1.7.5
 main: me.element.customdeathmessages.CustomDeathMessages
 description: Custom Death Messages made by Element_85
+softdepend:
+  - mcMMO
 authors:
   - Element_85
   - Legoman99573
