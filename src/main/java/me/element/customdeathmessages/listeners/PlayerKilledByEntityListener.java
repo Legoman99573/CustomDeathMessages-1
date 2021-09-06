@@ -121,6 +121,8 @@ public class PlayerKilledByEntityListener implements Listener {
 							path = "fireball-messages";
 							break;
 
+						case "TIPPED_ARROW": // Since 1.9
+						case "SPECTRAL_ARROW": // Since 1.9
 						case "ARROW":
 							if (((Projectile) event.getDamager()).getShooter() instanceof Skeleton) {
 								path = "skeleton-messages";
@@ -262,7 +264,7 @@ public class PlayerKilledByEntityListener implements Listener {
 					}
 
 					if (path.equals("not-implemented-messages")) {
-						message = message.replace( "%entity-name%", entity.toString());
+						message = message.replace( "%entity-name%", entity.toString().toLowerCase().replace("_", " "));
 					}
 
 					plugin.deathMessage.clear();

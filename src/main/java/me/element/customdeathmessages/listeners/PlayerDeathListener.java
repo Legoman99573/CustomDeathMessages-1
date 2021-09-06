@@ -1,7 +1,6 @@
 package me.element.customdeathmessages.listeners;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 import org.apache.commons.lang.WordUtils;
@@ -39,7 +38,7 @@ public class PlayerDeathListener implements Listener {
 		Player killer = event.getEntity().getKiller();
 		Location playerLocation = victim.getLocation();
 
-		if (victim instanceof Player && killer instanceof Player && plugin.getConfig().getBoolean("enable-pvp-messages"))
+		if (victim instanceof Player && killer instanceof Player && plugin.getConfig().getBoolean("enable-pvp-messages") && !killer.getName().equals(victim.getName()))  // Make sure the killer doesnt match the victims name
 		{
 			victim.sendMessage(HexChat.translateHexCodes(plugin.getConfig().getString("victim-message")
 					.replace("%killer%", victim.getName())
@@ -92,7 +91,7 @@ public class PlayerDeathListener implements Listener {
 
 		if (plugin.getConfig().getBoolean("enable-global-messages"))
 		{
-			if (killer instanceof Player)
+			if (killer instanceof Player && !killer.getName().equals(victim.getName())) // Make sure the killer doesnt match the victims name
 			{
 				ItemStack killWeapon = getKillWeapon(killer);
 
@@ -162,75 +161,97 @@ public class PlayerDeathListener implements Listener {
 			}
 			else
 			{
-				int versionInt = plugin.getServerVersion().getVersionInt();
-
 				DamageCause cause = DamageCause.CUSTOM;
 				if (victim.getLastDamageCause() != null)
 					cause = victim.getLastDamageCause().getCause();
 
-				String path = null;
+				String path;
 
-				if (cause == DamageCause.CUSTOM) {
-					path = "unknown-messages";
-				} else if (cause == DamageCause.FALL) {
-					path = "fall-damage-messages";
-				} else if (cause == DamageCause.DROWNING) { // added before supported v
-					path = "drowning-messages";
-				} else if (cause == DamageCause.LAVA) { // added before supported v
-					path = "lava-messages";
-				} else if (cause == DamageCause.SUFFOCATION) { // added before supported v
-					path = "suffocation-messages";
-				} else if (cause == DamageCause.WITHER) { // added before supported v
-					path = "wither-messages";
-				} else if (cause == DamageCause.FIRE_TICK) { // added before supported v
-					path = "fire-tick-messages";
-				} else if (cause == DamageCause.FIRE) { // added before supported v
-					path = "fire-messages";
-				} else if (cause == DamageCause.STARVATION) { // added before supported v
-					path = "starvation-messages";
-				} else if (cause == DamageCause.CONTACT) { // added before supported v
-					path = "cactus-messages";
-				} else if (cause == DamageCause.MAGIC) { // added before supported v
-					path = "potion-messages";
-				} else if (cause == DamageCause.VOID) { // added before supported v
-					path = "void-messages";
-				} else if (cause == DamageCause.LIGHTNING) { // added before supported v
-					path = "lightning-messages";
-				} else if (versionInt >= VersionEnums.VERSION_19.getVersionInt() && cause == DamageCause.FLY_INTO_WALL) { // 1.9
-					path = "elytra-messages";
-				} else if (versionInt >= VersionEnums.VERSION_110.getVersionInt() && cause == DamageCause.HOT_FLOOR) { // 1.10
-					path = "magma-block-messages";
-				} else if (cause == DamageCause.SUICIDE) { // added before supported v
-					path = "suicide-messages";
+				switch (cause.toString()) {
+					case "FALL":
+						path = "fall-damage-messages";
+						break;
+
+					case "DROWNING":
+						path = "drowning-messages";
+						break;
+
+					case "LAVA":
+						path = "lava-messages";
+						break;
+
+					case "SUFFOCATION":
+						path = "suffocation-messages";
+						break;
+
+					case "WITHER":
+						path = "wither-messages";
+						break;
+
+					case "FIRE":
+						path = "fire-messages";
+						break;
+
+					case "FIRE_TICK":
+						path = "fire-tick-messages";
+						break;
+
+					case "STARVATION":
+						path = "starvation-messages";
+						break;
+
+					case "CONTACT":
+						path = "";
+						break;
+
+					case "MAGIC":
+						path = "potion-messages";
+						break;
+
+					case "VOID":
+						path = "void-messages";
+						break;
+
+					case "LIGHTNING":
+						path = "lightning-messages";
+						break;
+
+					case "FLY_INTO_WALL": // Since 1.9
+						path = "elytra-messages";
+						break;
+
+					case "HOT_FLOOR": // Since 1.10
+						path = "magma-block-messages";
+						break;
+
+					case "FREEZE": // Since 1.17
+						path = "freeze-messages";
+						break;
+					case "CUSTOM":
+					default:
+						path = "not-implemented-damagecause-message";
 				}
 
 				String msg = "";
 
-				if (path == null)
-				{
+				Random rand = new Random();
+				List<String> msgs = plugin.getConfig().getStringList(path);
+				if (path.equals("not-implemented-damagecause-message")) {
 					if (plugin.deathMessage.get(victim.getName()) != null)
 					{
 						msg = HexChat.translateHexCodes(plugin.deathMessage.get(victim.getName()), plugin);
 						plugin.deathMessage.clear();
-					}
-					else
-					{
-						Random rand = new Random();
-						List<String> msgs = plugin.getConfig().getStringList("not-implemented-damagecause-message");
+					} else {
 						msg = msgs.get(rand.nextInt(msgs.size()))
 								.replace("%victim%", victim.getName())
 								.replace("%victim-nick%", victim.getDisplayName())
 								.replace("%victim-x%", String.valueOf(victim.getLocation().getBlockX()))
 								.replace("%victim-y%", String.valueOf(victim.getLocation().getBlockY()))
 								.replace("%victim-z%", String.valueOf(victim.getLocation().getBlockZ()))
-								.replace("%damagecause-name%", cause.toString().toLowerCase());
+								.replace("%damagecause-name%", cause.toString().toLowerCase().replace("_", " "));
 						msg = HexChat.translateHexCodes(msg, plugin);
 					}
-				}
-				else
-				{
-					Random rand = new Random();
-					List<String> msgs = plugin.getConfig().getStringList(path);
+				} else {
 					msg = msgs.get(rand.nextInt(msgs.size()))
 							.replace("%victim%", victim.getName())
 							.replace("%victim-nick%", victim.getDisplayName())

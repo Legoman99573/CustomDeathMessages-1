@@ -275,6 +275,10 @@ goat-messages:
     - "&c%victim% &egot rammed to death by an angry &f&lgoat"
     - "&c%victim% &ewas knocked out by an angry &f&lgoat &eout of nowhere"
 
+freeze-messages:
+    - "&c%victim% &efroze to death"
+    - "&c%victim% &eforgot to bring a coat with him while exploring"
+
 not-implemented-messages:
     - "&c%victim% &ewas killed by &f&l%entity-name%."
 
